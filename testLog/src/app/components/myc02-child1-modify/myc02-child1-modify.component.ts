@@ -1,4 +1,5 @@
 import { Component, EventEmitter,  OnInit, Output } from '@angular/core';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-myc02-child1-modify',
@@ -14,14 +15,19 @@ export class Myc02Child1ModifyComponent implements OnInit {
 
 
 
-  constructor() { }
+  constructor(public st:StorageService) { }
 
   ngOnInit(): void {
   }
   //自定义函数
   doModify(){
+    //点击按钮打印用户的输入
     console.log('用户输入的名字：',this.userInput);
+    // 根据用户的输入改变父组件的名称
     this.cryEvent.emit(this.userInput)
+    // 判断使用服务是否成功
+    this.st.set("userInput",{"userInput":this.userInput})
+    this.st.get("userInput")
   }
   
 
